@@ -161,7 +161,7 @@ def ajouter_categorie():
 
 class Categorie(db.Model):
     __tablename__ = 'Categories'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement= True)
     libelle_categorie = db.Column(db.String(100), nullable=False)
     livre = db.relationship("Livres", backref="Categories", lazy=True)
 
