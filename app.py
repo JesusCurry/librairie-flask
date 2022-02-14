@@ -69,7 +69,7 @@ def delete_livre(id):
     return ({"message": "L'id n'existe pas", "succes": "NOT OK", "deleted": "False"})
 
 
-@app.route('/LivresUpdate/', methods=['PUT'])
+@app.route('/Livres/', methods=['PUT'])
 def update_livre():
     try:
         b_d = json.loads(request.data.decode())
@@ -85,7 +85,7 @@ def update_livre():
         return ({"message": "Une erreur est survenue"})
 
 
-@app.route('/Categorie/<int:id>')
+@app.route('/Categories/<int:id>')
 def get_categorie(id):
     categorie = Categorie.query.all()
     for c in categorie:
@@ -94,7 +94,7 @@ def get_categorie(id):
     return ({"message": "Non Touvé", "succes": " NOT OK"})
 
 
-@app.route('/Categorie/<int:id>', methods=['DELETE'])
+@app.route('/Categories/<int:id>', methods=['DELETE'])
 def delete_categorie(id):
     try:
         c = Categorie.query.filter_by(id=id)
@@ -107,7 +107,7 @@ def delete_categorie(id):
         return ({"deleted": "False", "success": "NOT OK"})
 
 
-@app.route('/CategorieUpdate/', methods=['PUT'])
+@app.route('/Categories/', methods=['PUT'])
 def update_categorie():
     b_d = json.loads(request.data.decode())
     c = Categorie.query.filter_by(id=b_d["id"])
@@ -119,7 +119,7 @@ def update_categorie():
     return ({"success": "True", "Message": "Categorie mise à jour"})
 
 
-@app.route('/Categorie/<int:id>/Livres/')
+@app.route('/Categories/<int:id>/Livres/')
 def get_categorie_livre(id):
     d = {}
     li = list()
@@ -138,8 +138,8 @@ def get_categorie_livre(id):
 # return ({"message":"Not Found"})
 
 
-@app.route('/ajouter/Livres/', methods=['POST'])
-def get_livrex():
+@app.route('/Livres/', methods=['POST'])
+def ajout_livrex():
     book_data = json.loads(request.data.decode())
     livrex = Livre(isbn=book_data['isbn'], titre=book_data['titre'], datePublication=book_data['datePublication'],
                    categorie_id=book_data['categorie_id'], auteur=book_data['auteur'],
@@ -150,10 +150,10 @@ def get_livrex():
     return {"message" : "Livre ajouté"}
 
 
-@app.route('/ajouter/Categorie', methods=['POST'])
+@app.route('/Categories', methods=['POST'])
 def ajouter_categorie():
     categorie_data = json.loads(request.data.decode())
-    categorie = Categorie(id=categorie_data["id"], libelle_categorie=categorie_data["libelle_categorie"])
+    categorie = Categorie(id=categorie_data['id'], libelle_categorie=categorie_data['libelle_categorie'])
     db.session.add(categorie)
     db.session.commit()
     return {"message": "Categorie ajoutée"}
